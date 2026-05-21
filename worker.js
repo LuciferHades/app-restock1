@@ -133,6 +133,7 @@ async function updateWhere(db, payload) {
   return { success: true, rowsUpdated: result.meta?.changes || 0 };
 }
 
+
 async function deleteWhere(db, payload) {
   const table = ident(payload.table);
   const where = buildWhere(payload.filters || {}, payload.options || {});
