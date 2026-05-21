@@ -5,8 +5,8 @@ workers_dev = true
 
 # After creating the D1 database, uncomment this block and paste the real id.
 # Cloudflare Dashboard -> Workers & Pages -> D1 -> your database -> Database ID.
-#
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "restock-reconciliation"
-# database_id = "PASTE_D1_DATABASE_ID_HERE"
+
+ [[d1_databases]]
+ binding = "DB"
+ database_name = "restock-reconciliation"
+ database_id = "cbf34ddc-b332-4156-bb90-c232b28444ee"
