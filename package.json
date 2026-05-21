@@ -1,12 +1,12 @@
 {
-  "name": "restock-reconciliation-worker",
+  "name": "app-restock1",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
-    "check": "wrangler deploy --dry-run"
+    "deploy": "npx wrangler deploy --config wrangler.toml",
+    "dev": "npx wrangler dev --config wrangler.toml",
+    "check": "npx wrangler deploy --config wrangler.toml --dry-run"
   },
   "devDependencies": {
     "wrangler": "^4.93.0"
