@@ -12,17 +12,26 @@ export default {
     if (request.method === 'OPTIONS') return new Response('', { headers: JSON_HEADERS });
     if (request.method !== 'POST') return json({ success: false, error: 'POST only' }, 405);
 
-    const auth = request.headers.get('authorization') || '';
-    if (env.API_TOKEN && auth !== `Bearer ${env.API_TOKEN}`) {
-      return json({ success: false, error: 'Unauthorized' }, 401);
-    }
-
     try {
       const body = await request.json();
       const action = body.action;
       const payload = body.payload || {};
+      const auth = request.headers.get('authorization') || '';
+      const requiresDb = action !== 'health';
 
-      if (action === 'health') return json({ success: true, provider: 'D1_WORKER' });
+      if (requiresDb && !env.API_TOKEN) {
+        return json({ success: false, error: 'API_TOKEN secret is not configured in Cloudflare Worker settings' }, 500);
+      }
+
+      if (requiresDb && auth !== `Bearer ${env.API_TOKEN}`) {
+        return json({ success: false, error: 'Unauthorized' }, 401);
+      }
+
+      if (requiresDb && !env.DB) {
+        return json({ success: false, error: 'D1 binding DB is not configured. Add [[d1_databases]] in wrangler.toml or bind DB in Cloudflare.' }, 500);
+      }
+
+      if (action === 'health') return json({ success: true, provider: 'D1_WORKER', databaseBound: Boolean(env.DB), tokenConfigured: Boolean(env.API_TOKEN) });
       if (action === 'setupSchema') return json(await setupSchema(env.DB, payload.tables || []));
       if (action === 'readRows') return json(await readRows(env.DB, payload));
       if (action === 'appendRows') return json(await appendRows(env.DB, payload));
