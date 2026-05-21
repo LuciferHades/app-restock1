@@ -1,5 +1,5 @@
-name = "restock-reconciliation-api"
-main = "cloudflare/worker.js"
+name = "app-restock1"
+main = "worker.js"
 compatibility_date = "2026-05-21"
 workers_dev = true
 
