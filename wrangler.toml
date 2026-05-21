@@ -1,0 +1,12 @@
+name = "restock-reconciliation-api"
+main = "cloudflare/worker.js"
+compatibility_date = "2026-05-21"
+workers_dev = true
+
+# After creating the D1 database, uncomment this block and paste the real id.
+# Cloudflare Dashboard -> Workers & Pages -> D1 -> your database -> Database ID.
+#
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "restock-reconciliation"
+# database_id = "PASTE_D1_DATABASE_ID_HERE"
